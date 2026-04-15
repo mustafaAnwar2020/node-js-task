@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design Replication MVP</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+      }
+      body {
+        margin: 0;
+        background: #111827;
+        color: #e5e7eb;
+      }
+      .wrap {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 0 16px 32px;
+      }
+      .card {
+        background: #1f2937;
+        border: 1px solid #374151;
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 16px;
+      }
+      h1 {
+        margin: 0 0 14px;
+        font-size: 1.35rem;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 150px 150px 110px;
+        gap: 10px;
+      }
+      input,
+      select,
+      button,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #4b5563;
+        background: #111827;
+        color: #f9fafb;
+        font: inherit;
+      }
+      button {
+        background: #2563eb;
+        border-color: #2563eb;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .results {
+        display: none;
+      }
+      .results.show {
+        display: block;
+      }
+      .links a {
+        color: #93c5fd;
+      }
+      .links li {
+        margin-bottom: 6px;
+      }
+      textarea {
+        min-height: 220px;
+      }
+      .muted {
+        color: #9ca3af;
+        font-size: 0.92rem;
+      }
+      @media (max-width: 820px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="card">
+        <h1>AI Design Replication MVP</h1>
+        <p class="muted">Enter a storefront URL to run capture, token extraction, section detection, and mapping.</p>
+        <form id="analyze-form" class="row">
+          <input id="url" type="url" value="https://example.com" required />
+          <select id="pageType">
+            <option value="home">home</option>
+            <option value="collection">collection</option>
+            <option value="product">product</option>
+          </select>
+          <select id="viewport">
+            <option value="desktop">desktop</option>
+            <option value="mobile">mobile</option>
+          </select>
+          <button id="submitBtn" type="submit">Analyze</button>
+        </form>
+        <p id="status" class="muted"></p>
+      </section>
+
+      <section id="results" class="card results">
+        <h2>Results</h2>
+        <div id="stats"></div>
+        <ul id="links" class="links"></ul>
+        <label for="rawJson" class="muted">Raw API Response</label>
+        <textarea id="rawJson" readonly></textarea>
+      </section>
+    </main>
+
+    <script>
+      const form = document.getElementById("analyze-form");
+      const statusEl = document.getElementById("status");
+      const submitBtn = document.getElementById("submitBtn");
+      const results = document.getElementById("results");
+      const statsEl = document.getElementById("stats");
+      const linksEl = document.getElementById("links");
+      const rawJsonEl = document.getElementById("rawJson");
+
+      function renderLinks(files) {
+        const entries = Object.entries(files || {});
+        linksEl.innerHTML = entries
+          .map(([name, href]) => `<li><a href="${href}" target="_blank" rel="noreferrer">${name}</a></li>`)
+          .join("");
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const body = {
+          url: document.getElementById("url").value.trim(),
+          pageType: document.getElementById("pageType").value,
+          viewport: document.getElementById("viewport").value,
+        };
+
+        statusEl.textContent = "Running analysis... this can take a few seconds.";
+        submitBtn.disabled = true;
+        results.classList.remove("show");
+
+        try {
+          const response = await fetch("/api/analyze", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+
+          const payload = await response.json();
+          rawJsonEl.value = JSON.stringify(payload, null, 2);
+
+          if (!response.ok || !payload.ok) {
+            throw new Error(payload.message || payload.error || "Request failed");
+          }
+
+          const s = payload.stats || {};
+          statsEl.innerHTML = `
+            <p><strong>Run Folder:</strong> ${payload.runDir}</p>
+            <p><strong>Stats:</strong> nodes=${s.nodes}, sections=${s.sections}, mapped=${s.mapped}, unresolved=${s.unresolved}</p>
+          `;
+          renderLinks(payload.files);
+          results.classList.add("show");
+          statusEl.textContent = "Done.";
+        } catch (error) {
+          statusEl.textContent = `Error: ${error.message}`;
+          results.classList.add("show");
+          statsEl.innerHTML = "";
+          linksEl.innerHTML = "";
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>

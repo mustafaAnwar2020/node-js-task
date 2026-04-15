@@ -1,0 +1,51 @@
+export const componentRegistry = [
+    {
+        id: "HeaderNavigation",
+        supports: ["header"],
+        requiredProps: ["menuItems"],
+        optionalProps: ["logo", "sticky"],
+        fallbackProps: { sticky: true, menuItems: [] },
+    },
+    {
+        id: "HeroBanner",
+        supports: ["hero", "promoBanner"],
+        requiredProps: ["title"],
+        optionalProps: ["subtitle", "ctaLabel", "backgroundImage"],
+        fallbackProps: { title: "Welcome", ctaLabel: "Shop now" },
+    },
+    {
+        id: "CategoryCarousel",
+        supports: ["categoryStrip"],
+        requiredProps: ["items"],
+        optionalProps: ["title"],
+        fallbackProps: { items: [] },
+    },
+    {
+        id: "ProductGrid",
+        supports: ["productGrid"],
+        requiredProps: ["items"],
+        optionalProps: ["columns", "showPrice", "showAddToCart"],
+        fallbackProps: { items: [], columns: 4, showPrice: true, showAddToCart: true },
+    },
+    {
+        id: "ProductCard",
+        supports: ["productCard"],
+        requiredProps: ["product"],
+        optionalProps: ["showBadge"],
+        fallbackProps: { showBadge: true },
+    },
+    {
+        id: "ContentSection",
+        supports: ["contentBlock", "unknown"],
+        requiredProps: [],
+        optionalProps: ["text", "media"],
+        fallbackProps: {},
+    },
+    {
+        id: "StoreFooter",
+        supports: ["footer"],
+        requiredProps: ["links"],
+        optionalProps: ["socialLinks", "copyrightText"],
+        fallbackProps: { links: [] },
+    },
+];

@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "sourceUrl": "https://example.com",
+    "capturedAt": "2026-04-15T09:27:39.782Z",
+    "viewport": "desktop",
+    "pageType": "home"
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><title>Example Domain</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>body{background:#eee;width:60vw;margin:15vh auto;font-family:system-ui,sans-serif}h1{font-size:1.5em}div{opacity:0.8}a:link,a:visited{color:#348}</style><style type=\"text/css\">\n      *, *::before, *::after { animation: none !important; transition: none !important; }\n      html { scroll-behavior: auto !important; }\n    </style></head><body><div><h1>Example Domain</h1><p>This domain is for use in documentation examples without needing permission. Avoid use in operations.</p><p><a href=\"https://iana.org/domains/example\">Learn more</a></p></div>\n</body></html>",
+  "title": "Example Domain",
+  "screenshotPath": "H:\\work\\projects\\New folder (2)\\outputs\\2026-04-15T09-27-37-720Z\\example.com_home_desktop.png",
+  "nodes": [
+    {
+      "nodeId": "n_1",
+      "tag": "div",
+      "text": "Example DomainThis domain is for use in documentation examples without needing permission. Avoid use in operations.Learn more",
+      "className": "",
+      "role": null,
+      "href": null,
+      "bbox": {
+        "x": 288,
+        "y": 330,
+        "w": 864,
+        "h": 106
+      },
+      "styles": {
+        "color": "rgb(0, 0, 0)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "fontFamily": "system-ui, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "borderRadius": "0px",
+        "display": "block",
+        "gap": "normal",
+        "gridTemplateColumns": "none"
+      }
+    },
+    {
+      "nodeId": "n_2",
+      "tag": "a",
+      "text": "Learn more",
+      "className": "",
+      "role": null,
+      "href": "https://iana.org/domains/example",
+      "bbox": {
+        "x": 288,
+        "y": 415,
+        "w": 80,
+        "h": 21
+      },
+      "styles": {
+        "color": "rgb(51, 68, 136)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "fontFamily": "system-ui, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "borderRadius": "0px",
+        "display": "inline",
+        "gap": "normal",
+        "gridTemplateColumns": "none"
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "themeTokens": {
+    "primaryColor": "tokens.colors.primary",
+    "secondaryColor": "tokens.colors.secondary",
+    "bodyFont": "tokens.typography.bodyFont",
+    "headingFont": "tokens.typography.headingFont"
+  },
+  "components": [],
+  "unresolved": []
+}
